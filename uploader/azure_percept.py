@@ -39,9 +39,9 @@ def zip_openvino_image_classification_model_package(config_filepath):
     # create the zip file from config.json, the label file, and the model xml and bin files
     config_dirname = os.path.dirname(os.path.abspath(config_filepath))
     model_no_ext = os.path.splitext(config["ModelFileName"])[0]
-    model_bin_filename = model_no_ext + ".bin"  # get the model .bin filename from the .xml file name
+    model_bin_filename = f"{model_no_ext}.bin"  # get the model .bin filename from the .xml file name
     # create the zip filepath from the model name
-    zip_filepath = model_no_ext + ".zip"
+    zip_filepath = os.path.join(os.path.dirname(config_filepath), f"{model_no_ext}.zip")
     with zipfile.ZipFile(zip_filepath, "w") as zf:
         zf.write(config_filepath, arcname="config.json")
         zf.write(os.path.join(config_dirname, config["LabelFileName"]), arcname=config["LabelFileName"])
